@@ -34,7 +34,7 @@ if __name__=="__main__":
     
     pump_flow_rates = flow_range*1000
     syringe = Syringe(syringe_name, syringe_volume, syringe_type=syringe_type)  # Create a Syringe object with syringe number 'a', volume '10 ml', and plastic type 'bdp'
-    pump = Pump(syringe_name, "COM5", syringe1=syringe)  # Create a Pump object with pump number 'B', connected to serial port 'COM', and using syringeB
+    pump = Pump(syringe_name, "COM4", syringe1=syringe)  # Create a Pump object with pump number 'B', connected to serial port 'COM', and using syringeB
     
     pump.stop()  # Stop the pump before performing any operations
     clean(pump_flow_rates,pump,syringe,runtime_s, cycles,SL1500_flag=SLS1500_flag)  # Run the experiment with the specified flow rates, pump, syringe, and runtime

@@ -13,7 +13,6 @@ import sys
 import json
 import os
 
-
 customtkinter.set_ctk_parent_class(tkinterDnD.Tk)
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -22,7 +21,8 @@ app = customtkinter.CTk()
 # Get the screen width and height
 screen_width = app.winfo_screenwidth()
 screen_height = app.winfo_screenheight()
-app.geometry(f"{screen_width}x{screen_height-10}+0+0")
+app.geometry(f"{screen_width}x{screen_height}+0+0")
+
 app.title("Combined Environment Control Interface")
 app.grid_rowconfigure(0, weight=1)
 app.grid_rowconfigure(1, weight=1)
@@ -40,9 +40,6 @@ for i in range(4):
 bottom_frame = customtkinter.CTkFrame(master=app)
 bottom_frame.grid(row=1, column=0, columnspan=4,
                   padx=20, pady=20, sticky="nsew")
-
-
-
 
 class Widget():
     def browse_directory(self):
@@ -150,16 +147,14 @@ class Widget():
 
     def switch_sls(self):
         # Define logic for SLS switch
-        pass
-
-    
+        pass    
         
     switch_1 = customtkinter.CTkSwitch(
         master=frames[0], text="On/Off", command=switch_syringe_pump)
     combobox_1_0 = customtkinter.CTkComboBox(
-        frames[0], values=[str(i) for i in range(1, 13)], width=200)
+        frames[0], values=['COM'+str(i) for i in range(1, 13)], width=200)
     segmented_button_1 = customtkinter.CTkSegmentedButton(
-        master=frames[0], values=["       Syringe A       ", "       Syringe B       "], width=200)
+        master=frames[0], values=["       Pump 1       ", "       Pump 2       "], width=200)
     combobox_1_2 = customtkinter.CTkComboBox(
         frames[0], values=["BDP", "BDG"], width=200)
     entry_1 = customtkinter.CTkEntry(
@@ -170,7 +165,7 @@ class Widget():
     switch_2 = customtkinter.CTkSwitch(
         master=frames[1], text="On/Off", command=switch_saleae)
     combobox_2 = customtkinter.CTkComboBox(
-        frames[1], values=[str(i) for i in range(1, 13)], width=200)
+        frames[1], values=['COM'+str(i) for i in range(1, 13)], width=200)
     segmented_button_2 = customtkinter.CTkSegmentedButton(
         master=frames[1], values=[" Channel 0-1-2-3 ", " Channel 4-5-6-7 "], width=200)
     combobox_2_1 = customtkinter.CTkComboBox(
@@ -183,8 +178,6 @@ class Widget():
     calibrate_button = customtkinter.CTkButton(
         master=frames[1], text="Calibrate SALEAE", command=calibrate)
     
-    
-
     switch_3 = customtkinter.CTkSwitch(
         master=frames[2], text="On/Off", command=switch_fluigent)
     switch_4 = customtkinter.CTkSwitch(
@@ -233,7 +226,7 @@ class Widget():
         self.switch_1.pack(pady=10, padx=10)
 
         self.combobox_1_0 = customtkinter.CTkComboBox(
-            self.frame_1, values=[str(i) for i in range(1, 13)], width=width_syringe_frame)
+            self.frame_1, values=['COM'+str(i) for i in range(1, 13)], width=width_syringe_frame)
         self.combobox_1_0.pack(pady=10, padx=10)
         self.combobox_1_0.set("Choose COM")
 
@@ -269,7 +262,7 @@ class Widget():
         self.switch_2.pack(pady=10, padx=10)
 
         self.combobox_2 = customtkinter.CTkComboBox(
-            frame_2, values=[str(i) for i in range(1, 13)], width=width_saleae)
+            frame_2, values=['COM'+str(i) for i in range(1, 13)], width=width_saleae)
         self.combobox_2.pack(pady=10, padx=10)
         self.combobox_2.set("Choose COM")
 
