@@ -22,11 +22,9 @@ you may be attempting to run the installation without admin rights. Please refer
 3. You should see ```Driver Setup.exe executed successfully.``` appear on the console
 
 # Bulid the Python Developer Setup <img height=20 src="documentation/media/docker_logo.png"/>
-1.
-2.
-3.
+1.Download docker image
 
 # Run the Python Developer Setup <img height=20 src="documentation/media/python_logo.png"/>
-1.
+1. Run docker Imge with this command
 2.
 3.
