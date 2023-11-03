@@ -10,13 +10,13 @@ Combined Environment Control Interface
 # Windows Driver and Program Setup <img height=20 src="documentation/media/windows_logo.png"/>
 1. Once in the folder Combined-Environment-Control-Interface\python-image run the powershell commands ``` ./install_all.ps1 ```
 -1. If you get the error:
-```\install_all.ps1 cannot be loaded 
+\install_all.ps1 cannot be loaded 
 because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
 At line:1 char:1
 + .\install_all.ps1
 + ~~~~~~~~~~~~~~~~~
     + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess ```
+    + FullyQualifiedErrorId : UnauthorizedAccess 
 
 you may be attempting to run the installation without admin rights. Please refer to step #4 of _Installation Process_
 
