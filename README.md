@@ -9,22 +9,19 @@ Combined Environment Control Interface
 
 # Windows Driver and Program Setup <img height=20 src="documentation/media/windows_logo.png"/>
 1. Once in the folder Combined-Environment-Control-Interface\python-image run the powershell commands ``` ./install_all.ps1 ```
--1. If you get the error:
-\install_all.ps1 cannot be loaded 
-because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
-At line:1 char:1
-+ .\install_all.ps1
-+ ~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess 
 
-you may be attempting to run the installation without admin rights. Please refer to step #4 of _Installation Process_
+If you get the error:
+`\install_all.ps1 cannot be loaded 
+because running scripts is disabled on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.`
+you may be attempting to run the installation without admin rights. Please refer to step 4 of Installation Process.
 
 2. Follow the installation wizard to install logic 
 3. You should see ``` Driver Setup.exe executed successfully.``` appear on the console
 
 # Bulid the Python Developer Setup <img height=20 src="documentation/media/docker_logo.png"/>
-1.Download docker image
+1.Download docker 
+2.Download docker image
+3.Download Xming
 
 # Run the Python Developer Setup <img height=20 src="documentation/media/python_logo.png"/>
 1. Run docker Imge with this command
