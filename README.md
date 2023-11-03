@@ -17,9 +17,11 @@ At line:1 char:1
 + ~~~~~~~~~~~~~~~~~
     + CategoryInfo          : SecurityError: (:) [], PSSecurityException
     + FullyQualifiedErrorId : UnauthorizedAccess```
+
 you may be attempting to run the installation without admin rights. Please refer to step #4 of _Installation Process_
+
 2. Follow the installation wizard to install logic 
-3. You should see ```Driver Setup.exe executed successfully.``` appear on the console
+3. You should see ``` Driver Setup.exe executed successfully.``` appear on the console
 
 # Bulid the Python Developer Setup <img height=20 src="documentation/media/docker_logo.png"/>
 1.Download docker image
