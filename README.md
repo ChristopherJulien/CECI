@@ -16,7 +16,7 @@ At line:1 char:1
 + .\install_all.ps1
 + ~~~~~~~~~~~~~~~~~
     + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess```
+    + FullyQualifiedErrorId : UnauthorizedAccess ```
 
 you may be attempting to run the installation without admin rights. Please refer to step #4 of _Installation Process_
 
