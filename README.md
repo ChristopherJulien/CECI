@@ -2,11 +2,12 @@
 Combined Environment Control Interface
 
 # Installation Process
-1. clone/download this repository
-2. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
-3. Go to the folder python-image
-4. Give the installation batch access to run with admin rights by running on the command line ```Set-ExecutionPolicy RemoteSigned```
-5. Allow for Saleae automation
+1. Install the latest docker program https://docs.docker.com/engine/install/
+2. clone/download this repository
+4. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
+5. Go to the folder python-image
+6. Give the installation batch access to run with admin rights by running on the command line ```Set-ExecutionPolicy RemoteSigned```
+7. Allow for Saleae automation
 
 # Windows Driver and Program Setup <img height=20 src="documentation/media/windows_logo.png"/>
 1. Once in the folder Combined-Environment-Control-Interface\python-image run the powershell commands ``` ./install_all.ps1 ```
