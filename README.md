@@ -2,15 +2,16 @@
 
 # Installation of Docker <img height=20 src="documentation/media/docker.png"/>
 1. Download the docker program from the offical docker webpage ```https://docs.docker.com/engine/install/```
-2. You may need to restart your computer
-3. 
+2. Restart your computer to finish installation
+
 # Download Repository and run the powershell scripts <img height=20 src="documentation/media/powershell.png"/>
-2. clone/download this repository
+2. Clone/download this repository
 4. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
 5. Go to the folder python-image
 6. Give the installation batch access to run with admin rights by running on the command line ```Set-ExecutionPolicy Bypass -Scope Process```
-8. Allow for Saleae automation
-9. 
+8. Allow for Logic automation depending on the version you wish to run
+<img height=200 src="documentation/media/automation_logic1.png"/> <img height=200 src="documentation/media/automation_logic2.png"/>
+   
 
 # Windows Driver and Program Setup <img height=20 src="documentation/media/windows.png"/>
 1. Once in the folder Combined-Environment-Control-Interface\python-image run the powershell commands ``` ./install_all.ps1 ```
