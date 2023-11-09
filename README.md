@@ -1,10 +1,10 @@
 # Combined-Environment-Control-Interface
 
-# Installation of Docker
+# Installation of Docker <img height=20 src="documentation/media/docker.png"/>
 1. Download the docker program from the offical docker webpage ```https://docs.docker.com/engine/install/```
 2. You may need to restart your computer
 3. 
-# Download Repository and run the powershell scripts
+# Download Repository and run the powershell scripts <img height=20 src="documentation/media/powershell.png"/>
 2. clone/download this repository
 4. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
 5. Go to the folder python-image
@@ -12,7 +12,7 @@
 8. Allow for Saleae automation
 9. 
 
-# Windows Driver and Program Setup <img height=20 src="documentation/media/windows_logo.png"/>
+# Windows Driver and Program Setup <img height=20 src="documentation/media/windows.png"/>
 1. Once in the folder Combined-Environment-Control-Interface\python-image run the powershell commands ``` ./install_all.ps1 ```
 
 If you get the error:
@@ -29,7 +29,7 @@ you may be attempting to run the installation without admin rights. Please refer
 2. Follow the installation wizard to install logic 
 3. You should see ``` Driver Setup.exe executed successfully.``` appear on the console
 
-# Bulid the Python Developer Setup <img height=20 src="documentation/media/docker_logo.png"/>
+# Bulid the Python Developer Setup <img height=20 src="documentation/media/python.png"/>
 1.Download docker image
 echo $env:USERPROFILE\Desktop
 
