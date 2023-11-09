@@ -23,6 +23,8 @@ RUN pip3 install --user fluigent_sdk-23.0.0.zip
 RUN pip3 install -r requirements.txt
 RUN pip3 install logic2-automation
 RUN pip3 install sensirion-shdlc-driver
+RUN pip3 install usb utils
+
 
 # Set the DISPLAY environment variable
 ENV DISPLAY=host.docker.internal:0.0
