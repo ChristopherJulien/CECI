@@ -11,10 +11,7 @@
 6. Give the installation batch access to run with admin rights by running on the command line ```Set-ExecutionPolicy Bypass -Scope Process```
 8. Allow for Logic automation depending on the version you wish to run
    
-<img height=300 width=600 src="documentation/media/automation_logic1.png"/> 
-
-
-<img height=300 width=600 src="documentation/media/automation_logic2.png"/>
+<img height=500 width=500 src="documentation/media/automation_logic1.png"/> <img height=500 width=500 src="documentation/media/automation_logic2.png"/>
    
 
 # Windows Driver and Program Setup <img height=20 src="documentation/media/windows.png"/>
