@@ -3,6 +3,7 @@
 # Installation of Docker
 1. Download the docker program from the offical docker webpage ```https://docs.docker.com/engine/install/```
 2. You may need to restart your computer
+3. 
 # Download Repository and run the powershell scripts
 2. clone/download this repository
 4. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
