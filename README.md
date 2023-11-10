@@ -45,7 +45,7 @@ you may be attempting to run the installation without admin rights. Please refer
 
 ```
 docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb -v $HOME/Desktop:/mnt/desktop ceci_image bash
-}
+
 ```
 
 work on the mnt: /mnt/desktop
