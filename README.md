@@ -42,7 +42,9 @@ you may be attempting to run the installation without admin rights. Please refer
 5. Take a coffee brake might take 5-10 minutes
 6. Make sure Xming is running to ensure the GUI interface
 7. Run the docker image as a container by running on the powershell
-8. ```{ docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb -v $HOME/Desktop:/mnt/desktop ceci_image bash } ```
+```{
+docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb -v $HOME/Desktop:/mnt/desktop ceci_image bash
+}```
 
 work on the mnt: /mnt/desktop
 and on the json file and folder name directories
