@@ -129,6 +129,6 @@ if __name__ == "__main__":
     test.stop()
     # flow rate in ml/min
     # time in seconds
-    flowrate_ml_min = 10
-    t_s = 60
-    test.inject(syringeA, flowrate_ml_min, t_s, "ul/min")
+    fr = 10
+    t = 60
+    test.inject(syringeA, fr, t, "ul/min")

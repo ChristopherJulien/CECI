@@ -20,22 +20,19 @@ SLS = 1
 FLG = 2
 WATER = 3
 GLYCEROL = 4
-# FN-channel-Dictionary
-# channel_dict = {
-#     "Time [s]": ('Time [s]', 'none', 's', 'none'),
-#     "Channel 0": ('Channel 0', 'black', '7kPa', 0.057),
-#     "Channel 1": ('Channel 1', 'brown', '2kPa', 0.2),
-#     "Channel 2": ('Channel 2', 'red',  '25kPa', 0.018),
-#     "Channel 3": ('Channel 3', 'orange', '25kPa', 0.018)
-# }
+# FN Pressure Directory
+# '2kPa', 0.2
+#  '7kPa', 0.057
+# '25kPa', 0.018
+
 
 # CV-channel-Dictionary
 channel_dict = {
     "Time [s]": ('Time [s]', 'none', 's', 'none'),
-    "Channel 0": ('Channel 0', 'black', '25kPa',  0.018),
-    "Channel 1  ": ('Channel 1', 'brown', '7kPa', 0.057),
-    "Channel 2": ('Channel 2', 'red',  '2kPa', 0.2),
-    "Channel 3": ('Channel 3', 'orange', 'none', 0.0),
+    "Channel 0": ('Channel 0', 'black', '7kPa',  0.057),
+    "Channel 1": ('Channel 1', 'brown', '2kPa', 0.02),
+    "Channel 2": ('Channel 2', 'red',  '25kPa', 0.018),
+    "Channel 3": ('Channel 3', 'orange', '25kPa', 0.018),  # pressure #2
 }
 
 
@@ -437,6 +434,183 @@ class Plot:
         except Exception as e:
             print(f"Error: {e}")
 
+    def channels_vs_time_logic1(self, save=None, moving_average=0, plot_calibration_mean=False, show_plot=True):
+        try:
+            # Load data from CSV using pandas
+            filepath = self.folder_path + r'\voltages_saleae\analog_voltages\analog.csv'
+
+            df = pd.read_csv(filepath)
+            df.drop([0], axis=0, inplace=True)
+
+            # Extract columns for time and channels
+            time = df['Time[s]'].astype(float)
+            channel_0 = df[' Channel 0'].astype(float)
+            channel_1 = df[' Channel 1'].astype(float)
+            channel_2 = df[' Channel 2'].astype(float)
+            channel_3 = df[' Channel 3'].astype(float)
+
+            # Apply moving average filter
+            if moving_average > 0:
+                channel_0 = channel_0.rolling(
+                    window=moving_average).mean()
+                channel_1 = channel_1.rolling(
+                    window=moving_average).mean()
+                channel_2 = channel_2.rolling(
+                    window=moving_average).mean()
+                channel_3 = channel_3.rolling(
+                    window=moving_average).mean()
+                time = time.rolling(window=moving_average).mean()
+
+            # Create the plot
+            plt.figure(figsize=(10, 6))
+            plt.plot(
+                time, channel_0, label=channel_dict['Channel 0'][2], color=channel_dict['Channel 0'][1])
+            plt.plot(
+                time, channel_1, label=channel_dict['Channel 1'][2], color=channel_dict['Channel 1'][1])
+            plt.plot(
+                time, channel_2, label=channel_dict['Channel 2'][2], color=channel_dict['Channel 2'][1])
+            plt.plot(
+                time, channel_3, label=channel_dict['Channel 3'][2], color=channel_dict['Channel 3'][1])
+
+            # Plot the offeset values
+            if self.calibration_mean != [] and plot_calibration_mean:
+                plt.axhline(
+                    y=self.calibration_mean[0], color=channel_dict['Channel 0'][1], linestyle='--', label='Offset Channel 0')
+                plt.axhline(
+                    y=self.calibration_mean[1], color=channel_dict['Channel 1'][1], linestyle='--', label='Offset Channel 1')
+                plt.axhline(
+                    y=self.calibration_mean[2], color=channel_dict['Channel 2'][1], linestyle='--', label='Offset Channel 2')
+                plt.axhline(
+                    y=self.calibration_mean[3], color=channel_dict['Channel 3'][1], linestyle='--', label='Offset Channel 3')
+
+            plt.autoscale(axis='y')
+            plt.xlabel('Time [s]', fontsize=20)
+            plt.ylabel('Voltage [V]', fontsize=20)
+            plt.title('Channel Voltage vs Time')
+            if plot_calibration_mean:
+                plt.title("Channel Voltage vs Time & Calibration Mean")
+            plt.tick_params(axis='both', which='major', labelsize=16)
+
+            # Customize the spines
+            ax = plt.gca()
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            # Adjust the linewidth of the left spine
+            ax.spines['left'].set_linewidth(0.5)
+            # Adjust the linewidth of the bottom spine
+            ax.spines['bottom'].set_linewidth(0.5)
+
+            # Add gridlines to the plot
+            plt.grid(color='gray', linestyle='--', linewidth=0.5)
+
+            # Customize the legend
+            plt.rcParams['figure.autolayout'] = True
+            plt.rcParams['font.size'] = 9
+            plt.rcParams['legend.edgecolor'] = '1'
+            plt.legend(fontsize=12, frameon=False)
+
+            # Save the plot
+            if save:
+                save_directory = self.exp_name
+                save_path = os.path.join(
+                    save_directory, f"channels_vs_time_{self.exp_name}.png")
+                plt.savefig(save_path)
+            # Show the plot
+            if show_plot:
+                plt.show()
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+    def channels_vs_time_logic1(self, save=None, moving_average=0, plot_calibration_mean=False, show_plot=True):
+        try:
+            # Load data from CSV using pandas
+            filepath = self.folder_path + r'\voltages_saleae\analog_voltages\analog.csv'
+
+            df = pd.read_csv(filepath)
+            df.drop([0], axis=0, inplace=True)
+            # print(list(df.columns))
+
+            # Extract columns for time and channels
+            time = df['Time[s]'].astype(float)
+            channel_0 = df[' Channel 0'].astype(float)
+            channel_1 = df[' Channel 1'].astype(float)
+            channel_2 = df[' Channel 2'].astype(float)
+            channel_3 = df[' Channel 3'].astype(float)
+
+            # Apply moving average filter
+            if moving_average > 0:
+                channel_0 = channel_0.rolling(
+                    window=moving_average).mean()
+                channel_1 = channel_1.rolling(
+                    window=moving_average).mean()
+                channel_2 = channel_2.rolling(
+                    window=moving_average).mean()
+                channel_3 = channel_3.rolling(
+                    window=moving_average).mean()
+                time = time.rolling(window=moving_average).mean()
+
+            # Create the plot
+            plt.figure(figsize=(10, 6))
+            plt.plot(
+                time, channel_0, label=channel_dict['Channel 0'][2], color=channel_dict['Channel 0'][1])
+            plt.plot(
+                time, channel_1, label=channel_dict['Channel 1'][2], color=channel_dict['Channel 1'][1])
+            plt.plot(
+                time, channel_2, label=channel_dict['Channel 2'][2], color=channel_dict['Channel 2'][1])
+            plt.plot(
+                time, channel_3, label=channel_dict['Channel 3'][2], color=channel_dict['Channel 3'][1])
+
+            # Plot the offeset values
+            if self.calibration_mean != [] and plot_calibration_mean:
+                plt.axhline(
+                    y=self.calibration_mean[0], color=channel_dict['Channel 0'][1], linestyle='--', label='Offset Channel 0')
+                plt.axhline(
+                    y=self.calibration_mean[1], color=channel_dict['Channel 1'][1], linestyle='--', label='Offset Channel 1')
+                plt.axhline(
+                    y=self.calibration_mean[2], color=channel_dict['Channel 2'][1], linestyle='--', label='Offset Channel 2')
+                plt.axhline(
+                    y=self.calibration_mean[3], color=channel_dict['Channel 3'][1], linestyle='--', label='Offset Channel 3')
+
+            plt.autoscale(axis='y')
+            plt.xlabel('Time [s]', fontsize=20)
+            plt.ylabel('Voltage [V]', fontsize=20)
+            plt.title('Channel Voltage vs Time')
+            if plot_calibration_mean:
+                plt.title("Channel Voltage vs Time & Calibration Mean")
+            plt.tick_params(axis='both', which='major', labelsize=16)
+
+            # Customize the spines
+            ax = plt.gca()
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            # Adjust the linewidth of the left spine
+            ax.spines['left'].set_linewidth(0.5)
+            # Adjust the linewidth of the bottom spine
+            ax.spines['bottom'].set_linewidth(0.5)
+
+            # Add gridlines to the plot
+            plt.grid(color='gray', linestyle='--', linewidth=0.5)
+
+            # Customize the legend
+            plt.rcParams['figure.autolayout'] = True
+            plt.rcParams['font.size'] = 9
+            plt.rcParams['legend.edgecolor'] = '1'
+            plt.legend(fontsize=12, frameon=False)
+
+            # Save the plot
+            if save:
+                save_directory = self.exp_name
+                save_path = os.path.join(
+                    save_directory, f"channels_vs_time_{self.exp_name}.png")
+                plt.savefig(save_path)
+            # Show the plot
+            if show_plot:
+                plt.show()
+
+        except Exception as e:
+            print(f"Error: {e}")
+
     def create_pressure_v_time_csv(self):
         folder_path = self.folder_path
         analog_path = folder_path + r'/voltages_saleae/analog_voltages/analog.csv'
@@ -615,6 +789,129 @@ class Plot:
         # Save the modified DataFrame to the new CSV file
         df.to_csv(pressure_path, index=False)
         print(f"New calibrated_pressures.csv created successfully.")
+
+    def create_pressure_7_2_25_25_v_time_csv_logic1(self):
+        folder_path = self.folder_path
+        analog_path = folder_path + r'/voltages_saleae/analog_voltages/analog.csv'
+
+        os.makedirs(
+            folder_path + r'/voltages_saleae/analog_pressures', exist_ok=True)
+        pressure_path = folder_path + \
+            r'\voltages_saleae\analog_pressures\calibrated_pressures.csv'
+
+        # Read the original CSV file
+        df = pd.read_csv(analog_path)
+        df.drop([0], axis=0, inplace=True)
+        channel_0 = df[' Channel 0'].astype(float)
+        channel_1 = df[' Channel 1'].astype(float)
+        channel_2 = df[' Channel 2'].astype(float)
+        channel_3 = df[' Channel 3'].astype(float)
+
+        # Change to calibrated voltage values
+        print(self.zero_v_difference)
+        df[' Channel 0'] = channel_0 - self.zero_v_difference[0]
+        df[' Channel 1'] = channel_1 - self.zero_v_difference[1]
+        df[' Channel 2'] = channel_2 - self.zero_v_difference[2]
+        df[' Channel 3'] = channel_3 - self.zero_v_difference[3]
+
+        # Change column headers to our desired names
+        df.columns = ['s',
+                      'delta_p_7',
+                      'ground_p_2',
+                      'resev_n1_25',
+                      'resev_n2_25'
+                      ]
+        df.to_csv(pressure_path, index=False)
+
+        # Apply voltage to pressure transfer function and times 10 to get mbar from kpa
+        df['delta_p_7'] = ((df['delta_p_7']/5) - 0.5)/0.057 * 10
+        df['ground_p_2'] = ((df['ground_p_2']/5) - 0.5)/0.2 * 10
+        df['resev_n1_25'] = ((df['resev_n1_25']/5) - 0.5)/0.018 * 10
+        df['resev_n2_25'] = ((df['resev_n2_25']/5) - 0.5)/0.018 * 10
+
+        # Save the modified DataFrame to the new CSV file
+        df.to_csv(pressure_path, index=False)
+        print(f"New calibrated_pressures.csv created successfully.")
+
+    def pressure_vs_time_7_2_25_25_logic1(self, save=None, moving_average=0, show_plot=True):
+        pressure_path = self.folder_path + \
+            r'\voltages_saleae\analog_pressures\calibrated_pressures.csv'
+        df = pd.read_csv(pressure_path)
+        df.drop([0], axis=0, inplace=True)
+
+        # Change the name of the columns
+        line_7_black = df['delta_p_7'].astype(float)
+        line_2_brown = df['ground_p_2'].astype(float)
+        line_25_red = df['resev_n1_25'].astype(float)
+        line_25_orange = df['resev_n2_25'].astype(float)
+
+        if moving_average > 0:
+            line_7_black = line_7_black.rolling(window=moving_average).mean()
+            line_2_brown = line_2_brown.rolling(window=moving_average).mean()
+            line_25_red = line_25_red.rolling(window=moving_average).mean()
+            line_25_orange = line_25_orange.rolling(
+                window=moving_average).mean()
+
+        fig, ax = plt.subplots(figsize=(9.0, 3.0))
+        line_7_black, = ax.plot(
+            df['s'], line_7_black, lw=2, label='7kPa', color='black')
+        line_25_brown, = ax.plot(
+            df['s'], line_2_brown, lw=2, label='2kPa', color='brown')
+        line_25_red, = ax.plot(df['s'], line_25_red,
+                               lw=2, label='25kPa', color='red')
+        line_25_orange, = ax.plot(
+            df['s'], line_25_orange, lw=2, label='25kPa', color='orange')
+
+        leg = ax.legend(fancybox=True, shadow=True)
+
+        lines = [line_7_black, line_25_brown, line_25_red, line_25_orange]
+        lined = {}
+
+        for legline, origline in zip(leg.get_lines(), lines):
+            legline.set_picker(True)
+            lined[legline] = origline
+
+        def on_pick(event):
+            print('Picked')
+            legline = event.artist
+            origline = lined[legline]
+            visible = not origline.get_visible()
+            origline.set_visible(visible)
+            legline.set_alpha(1.0 if visible else 0.2)
+            fig.canvas.draw()
+        fig.canvas.mpl_connect('pick_event', on_pick)
+
+        plt.autoscale(axis='y')
+        plt.xlabel('Time [s]', fontsize=20)
+        plt.ylabel('Pressure [mbar]', fontsize=20)
+        plt.title('Calibrated Pressure vs Time')
+        plt.tick_params(axis='both', which='major', labelsize=16)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+
+        # Customize the spines
+        # ax = plt.gca()
+        # ax.spines['top'].set_visible(False)
+        # ax.spines['right'].set_visible(False)
+        # ax.spines['left'].set_linewidth(0.5)
+        # ax.spines['bottom'].set_linewidth(0.5)
+        # plt.grid(color='gray', linestyle='--', linewidth=0.5)
+
+        # Customize the legend
+        # plt.rcParams['figure.autolayout'] = True
+        # plt.rcParams['font.size'] = 9
+        # plt.rcParams['legend.edgecolor'] = '1'
+        # plt.legend(fontsize=12, frameon=False)
+
+        # Save the plot
+        if save:
+            save_directory = self.exp_name
+            save_path = os.path.join(
+                save_directory, f"set_pressures_vs_time_{self.exp_name}.png")
+            plt.savefig(save_path)
+
+        if show_plot:
+            plt.show()
 
     def pressure_vs_time_7_25_25_25(self, save=None, moving_average=0):
         pressure_path = self.folder_path + \
@@ -1280,6 +1577,43 @@ class Plot:
 
         return offset
 
+    def get_channels_calibration_offset_logic1(self, save=None, show_plot=True):
+        calibraton_path = r'Calibration_' + self.exp_folder
+        print(calibraton_path)
+        cal_plot = Plot(calibraton_path)
+        try:
+            filepath = cal_plot.folder_path + r'\voltages_saleae\analog_voltages\analog.csv'
+
+            df = pd.read_csv(filepath)
+
+            # logic 1 adds a new header index so we drop it
+            df.drop([0], axis=0, inplace=True)
+
+            # Extract columns for time and channels
+            time = df['Time[s]'].astype(float)
+            channel_0 = df[' Channel 0'].astype(float)
+            channel_1 = df[' Channel 1'].astype(float)
+            channel_2 = df[' Channel 2'].astype(float)
+            channel_3 = df[' Channel 3'].astype(float)
+
+        except Exception as e:
+            print("Error Get calibration offset logic 1: ", e)
+            return
+
+        # Calculate the average of each channel
+
+        channel_0_average = sum(channel_0) / len(channel_0)
+        channel_1_average = sum(channel_1) / len(channel_1)
+        channel_2_average = sum(channel_2) / len(channel_2)
+        channel_3_average = sum(channel_3) / len(channel_3)
+
+        offset = [channel_0_average, channel_1_average,
+                  channel_2_average, channel_3_average]
+        cal_plot.calibration_mean = offset
+        if show_plot:
+            cal_plot.channels_vs_time_logic1(save=save, moving_average=0)
+        return offset
+
     def get_zero_voltage_difference(self, save=None, show_plot=True):
         zero_difference = []
         zero_difference = [x - 2.5 for x in self.calibration_mean]
@@ -1296,6 +1630,97 @@ class Plot:
             channel_1 = df[channel_dict['Channel 1'][0]]
             channel_2 = df[channel_dict['Channel 2'][0]]
             channel_3 = df[channel_dict['Channel 3'][0]]
+
+            # Apply moving average filter
+            if moving_average > 0:
+                channel_0 = channel_0.rolling(
+                    window=moving_average).mean()
+                channel_1 = channel_1.rolling(
+                    window=moving_average).mean()
+                channel_2 = channel_2.rolling(
+                    window=moving_average).mean()
+                channel_3 = channel_3.rolling(
+                    window=moving_average).mean()
+                time = time.rolling(window=moving_average).mean()
+
+            # Create the plot
+            plt.figure(figsize=(10, 6))
+            alpha = 0.18
+            plt.plot(
+                time, channel_0, label=channel_dict['Channel 0'][2], alpha=alpha, color=channel_dict['Channel 0'][1])
+            plt.plot(
+                time, channel_1, label=channel_dict['Channel 1'][2], alpha=alpha, color=channel_dict['Channel 1'][1])
+            plt.plot(
+                time, channel_2, label=channel_dict['Channel 2'][2], alpha=alpha, color=channel_dict['Channel 2'][1])
+            plt.plot(
+                time, channel_3, label=channel_dict['Channel 3'][2], alpha=alpha, color=channel_dict['Channel 3'][1])
+
+            # # Plot the offeset values
+            if zero_difference != []:
+                plt.plot(
+                    time, channel_0 - zero_difference[0], color=channel_dict['Channel 0'][1], label='Calibrated Channel 0')
+                plt.plot(
+                    time, channel_1 - zero_difference[1], color=channel_dict['Channel 1'][1], label='Calibrated Channel 1')
+                plt.plot(
+                    time, channel_2 - zero_difference[2], color=channel_dict['Channel 2'][1], label='Calibrated Channel 2')
+                plt.plot(
+                    time, channel_3 - zero_difference[3], color=channel_dict['Channel 3'][1], label='Calibrated Channel 3')
+
+            plt.autoscale(axis='y')
+            plt.xlabel('Time [s]', fontsize=20)
+            plt.ylabel('Voltage [V]', fontsize=20)
+            plt.title('Zeroed Voltage vs Time')
+            plt.tick_params(axis='both', which='major', labelsize=16)
+
+            # Customize the spines
+            ax = plt.gca()
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            # Adjust the linewidth of the left spine
+            ax.spines['left'].set_linewidth(0.5)
+            # Adjust the linewidth of the bottom spine
+            ax.spines['bottom'].set_linewidth(0.5)
+
+            # Add gridlines to the plot
+            plt.grid(color='gray', linestyle='--', linewidth=0.5)
+
+            # Customize the legend
+            plt.rcParams['figure.autolayout'] = True
+            plt.rcParams['font.size'] = 9
+            plt.rcParams['legend.edgecolor'] = '1'
+            plt.legend(fontsize=12, frameon=False)
+
+            # Save the plot
+            if save:
+                save_directory = self.exp_name
+                save_path = os.path.join(
+                    save_directory, f"channels_vs_time_{self.exp_name}.png")
+                plt.savefig(save_path)
+            # Show the plot
+            if show_plot:
+                plt.show()
+
+        except Exception as e:
+            print(f"Error: {e}")
+        return zero_difference
+
+    def get_zero_voltage_difference_logic1(self, save=None, show_plot=True):
+        zero_difference = []
+        zero_difference = [x - 2.5 for x in self.calibration_mean]
+        # print("Zero difference: ", zero_difference)
+        try:
+            # Load data from CSV using pandas
+            filepath = self.folder_path + r'\voltages_saleae\analog_voltages\analog.csv'
+
+            df = pd.read_csv(filepath)
+            df.drop([0], axis=0, inplace=True)
+
+            # Extract columns for time and channels
+            time = df['Time[s]'].astype(float)
+            channel_0 = df[' Channel 0'].astype(float)
+            channel_1 = df[' Channel 1'].astype(float)
+            channel_2 = df[' Channel 2'].astype(float)
+            channel_3 = df[' Channel 3'].astype(float)
 
             # Apply moving average filter
             if moving_average > 0:
@@ -1445,6 +1870,91 @@ class Plot:
 
         plt.show()
 
+    def p1_p2_dp_logic1(self, save=None, dp_sensor=7, show_plot=True):
+        calibrated_pressure_path = self.folder_path + \
+            r'\voltages_saleae\analog_pressures\calibrated_pressures.csv'
+        df = pd.read_csv(calibrated_pressure_path)
+        df.drop([0], axis=0, inplace=True)
+
+        fig, ax = plt.subplots(figsize=(7.0, 7.0))
+        plt.scatter(df['resev_n1_25'], df['resev_n2_25'],
+                    c=df[f'delta_p_{dp_sensor}'], cmap='viridis')
+        plt.autoscale(axis='y')
+        plt.xlabel('Pressure Node 1 [mbar]', fontsize=20)
+        plt.ylabel('Pressure Node 2 [mbar]', fontsize=20)
+        plt.colorbar(label=f'Delta P (Sensor {dp_sensor} [mbar])')
+        plt.title('P1 and P2 and dP')
+        plt.tick_params(axis='both', which='major', labelsize=16)
+
+        # Customize the spines
+        ax = plt.gca()
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_linewidth(0.5)
+        ax.spines['bottom'].set_linewidth(0.5)
+        plt.grid(color='gray', linestyle='--', linewidth=0.5)
+
+        # Customize the legend
+        plt.rcParams['figure.autolayout'] = True
+        plt.rcParams['font.size'] = 9
+        plt.rcParams['legend.edgecolor'] = '1'
+        plt.legend(fontsize=12, frameon=False)
+
+        if save:
+            save_directory = self.exp_name
+            save_path = os.path.join(
+                save_directory, f"p1_p2_dp_{self.exp_name}.png")
+            plt.savefig(save_path)
+
+        if show_plot:
+            plt.show()
+
+
+def join_all_dp_3D_logic1(quadrant_1, quadrant_2, quadrant_3, quadrant_4, dp_sensor=7, save=None, show_plot=True):
+    # Assuming you have a 3D dataset with x, y, and z values
+    df_1 = pd.read_csv(quadrant_1.folder_path +
+                       r'\voltages_saleae\analog_pressures\calibrated_pressures.csv')
+    df_2 = pd.read_csv(quadrant_2.folder_path +
+                       r'\voltages_saleae\analog_pressures\calibrated_pressures.csv')
+    df_3 = pd.read_csv(quadrant_3.folder_path +
+                       r'\voltages_saleae\analog_pressures\calibrated_pressures.csv')
+    df_4 = pd.read_csv(quadrant_4.folder_path +
+                       r'\voltages_saleae\analog_pressures\calibrated_pressures.csv')
+
+    combined_df = pd.concat([df_1, df_2, df_3, df_4], ignore_index=True)
+
+    # Create a 3D figure
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+
+    x = combined_df['resev_n1_25']
+    y = combined_df['resev_n2_25']
+    z = combined_df[f'delta_p_{dp_sensor}']
+    # Use the same column for color mapping
+    c = combined_df[f'delta_p_{dp_sensor}']
+
+    # Create a 3D scatter plot with color mapping
+    scatter = ax.scatter(x, y, z, c=c, cmap='viridis')
+
+    ax.set_xlabel('Pressure Node 1 [mbar]', fontsize=14)
+    ax.set_ylabel('Pressure Node 2 [mbar]', fontsize=14)
+    ax.set_zlabel(f'Delta P (Sensor {dp_sensor} [mbar])', fontsize=14)
+    ax.set_title(
+        '3D Scatter Plot of P1, P2, and dP with Color Mapping', fontsize=16)
+
+    # Customize the legend
+    cbar = fig.colorbar(
+        scatter, ax=ax, label=f'Delta P (Sensor {dp_sensor} [mbar])', pad=0.1)
+    cbar.ax.tick_params(labelsize=12)
+
+    # if save:
+    #     save_directory = self.exp_name
+    #     save_path = os.path.join(
+    #         save_directory, f"p1_p2_dp_3D{self.exp_name}.png")
+    #     plt.savefig(save_path)
+
+    plt.show()
+
 
 def join_all_dp_quadrants(quadrant_1, quadrant_2, quadrant_3, quadrant_4, dp_sensor=7, save=None, show_plot=True):
     df_1 = pd.read_csv(quadrant_1.folder_path +
@@ -1491,52 +2001,55 @@ def join_all_dp_quadrants(quadrant_1, quadrant_2, quadrant_3, quadrant_4, dp_sen
 
 
 if __name__ == "__main__":
-    # folder_path = r'FN-1_8-TUBE_++_pt_18'
-    # folder_path = r'FN-1_8-TUBE_--_pt_18'
+    # folder_path = r'FN-1_8-TUBE_++_pt_30'
     # plot = Plot(folder_path)
 
-    quadrant_1 = Plot('FN-1_8-TUBE_++_pt_15')
-    quadrant_2 = Plot('FN-1_8-TUBE_+-_pt_15')
-    quadrant_3 = Plot('FN-1_8-TUBE_-+_pt_15')
-    quadrant_4 = Plot('FN-1_8-TUBE_--_pt_15')
+    quadrant_1 = Plot('FN-1_8-TUBE_++_pt_30')
+    quadrant_2 = Plot('FN-1_8-TUBE_+-_pt_30')
+    quadrant_3 = Plot('FN-1_8-TUBE_-+_pt_30')
+    quadrant_4 = Plot('FN-1_8-TUBE_--_pt_30')
 
     save = True
     moving_average = 0
     show_plot = True
 
 # # 1. plot the recorded absolute pressures
-#     plot.double_pressure_controller_command_overview(
-#         save, moving_average, nb_controllers=2, show_plot=show_plot)
+#     # plot.double_pressure_controller_command_overview(
+#     #     save, moving_average, nb_controllers=2, show_plot=show_plot)
 
 # # 2. get the calibration offset
-#     plot.calibration_mean = plot.get_channels_calibration_offset(
+#     plot.calibration_mean = plot.get_channels_calibration_offset_logic1(
 #         save=save, show_plot=show_plot)
 
 # # (2. Visualization of calibration mean in original plot)
-#     plot.channels_vs_time(save, moving_average=0,
-#                           plot_calibration_mean=True, show_plot=show_plot)
-#     # check that the subratction was done correctly
+#     plot.channels_vs_time_logic1(save, moving_average=0,
+#                                  plot_calibration_mean=True, show_plot=show_plot)
+# #     # check that the subratction was done correctly
 
 # # 3. Zero the pressure
-#     plot.zero_v_difference = plot.get_zero_voltage_difference(
+#     plot.zero_v_difference = plot.get_zero_voltage_difference_logic1(
 #         save, show_plot=show_plot)
 
 # # 4. Calculate the pressure with calibrated voltages offet
+#     plot.create_pressure_7_2_25_25_v_time_csv_logic1()
 #     # plot.create_pressure_7_25_25_25_v_time_csv()
-#     plot.create_pressure_7_2_25_25_v_time_csv()
+# #     plot.create_pressure_7_2_25_25_v_time_csv()
 
-# # 5 Plot the pressure vs time
-#     plot.pressure_vs_time_7_2_25_25(
+# # # 5 Plot the pressure vs time
+#     plot.pressure_vs_time_7_2_25_25_logic1(
 #         save, moving_average=0, show_plot=show_plot)
 
-# # 6. Plot interpolated difference in pressure
-#     plot.p1_p2_dp(save, dp_sensor=2, show_plot=show_plot)
+# # # 6. Plot interpolated difference in pressure
+#     plot.p1_p2_dp(save, dp_sensor=7, show_plot=show_plot)
 #     # plot.p1_p2_dp_3D(save)
 
 # 7. Plot all flow measurements in one graph
-    join_all_dp_quadrants(quadrant_1, quadrant_2, quadrant_3,
-                          quadrant_4, dp_sensor=2, save=save, show_plot=show_plot)
+    # join_all_dp_quadrants(quadrant_1, quadrant_2, quadrant_3,
+    #                       quadrant_4, dp_sensor=7, save=save, show_plot=show_plot)
 
+# 8. 3D plot all the quadrants
+    join_all_dp_3D_logic1(quadrant_1, quadrant_2, quadrant_3,
+                          quadrant_4, dp_sensor=7, save=save, show_plot=show_plot)
 
 # 6. Averaged over time window to plot averaged delta p
 

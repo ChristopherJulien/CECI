@@ -41,6 +41,8 @@ def process_sls_1500(dict_parameters):
         duration_s=total_seconds, filename=file_name, set_flow_rate_string=None, sls_interval=sls_interval)
 
 # Sensor Measurement Commands
+
+
 class Get_Version(ShdlcCommand):
     def __init__(self):
         super(Get_Version, self).__init__(
