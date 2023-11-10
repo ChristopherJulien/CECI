@@ -9,9 +9,7 @@
 4. Open a powershell with admin right on the folder where the repository was cloned (accept the prompt to open admin acces)
 5. Go to the folder python-image
 6. Give the installation batch access to run with admin rights by running on the command line
-7. ```
-8. {Set-ExecutionPolicy Bypass -Scope Process}
-9. ```
+```{ Set-ExecutionPolicy Bypass -Scope Process }```
 10. Enables Saleae's software Logic for automation by selecting preferences and ticking the automatin checkmark as shown
    
 <img height=500 width=500 src="documentation/media/automation_logic1.1.png"/><img height=500 width=500 src="documentation/media/automation_logic2.png"/>
