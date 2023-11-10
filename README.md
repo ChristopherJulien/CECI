@@ -31,8 +31,15 @@ you may be attempting to run the installation without admin rights. Please refer
 2. Follow the installation wizard to install logic 
 3. You should see ``` Driver Setup.exe executed successfully.``` appear on the console
 
-# Bulid the Python Developer Setup <img height=20 src="documentation/media/python.png"/>
-1.Download docker image
+# Bulid the Python Developer Setup <img height=20 src="documentation/media/docker.png"/>
+1. You will only need to build a docker image once. To do so open powershell with administrator rights
+2. Open docker program on you computer
+3. Change your directory to where **Combined-Environment-Control-Interface** -> **Python-Image**
+4. To build the image from the docker file run ``` docker build -t ceci_image .``` In this example we tagged(named) the image as ceci_image
+5. Take a coffee brake might take 5-10 minutes
+6. Run the docker image as a container by running on the powershell ```docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb -v $HOME/Desktop:/mnt/desktop image bash```
+
+
 echo $env:USERPROFILE\Desktop
 
 docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb image bash
