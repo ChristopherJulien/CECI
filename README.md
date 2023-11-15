@@ -34,7 +34,7 @@ you may be attempting to run the installation without admin rights. Please refer
 2. Follow the installation wizard to install logic 
 3. You should see ``` Driver Setup.exe executed successfully.``` appear on the console
 
-# Bulid the Python Developer Setup <img height=20 src="documentation/media/docker.png"/>
+# Bulid the Python Developer Setup <img height=20 src="documentation/media/python.png"/>
 1. You will only need to build a docker image once. To do so open powershell with administrator rights
 2. Open docker program on you computer
 3. Change your directory to where **Combined-Environment-Control-Interface** -> **Python-Image**
