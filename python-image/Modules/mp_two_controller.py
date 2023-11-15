@@ -63,7 +63,7 @@ vl_init = ''
 # ~~~~~~~~~~~~~~~~~~~~~~  Experiment Parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # exp_folder = ("{:s}Test++".format(
 # calibration_folder))
-exp_folder = ("{:s}FN-1_8-TUBE_--_pt_18".format(
+exp_folder = ("{:s}TESTS".format(
     calibration_folder, plateau_time))
 
 # ~~~~~~~~~~~~~~~~~~~~~~  Experiment Parameters ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
