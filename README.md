@@ -59,8 +59,5 @@ docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb image bash
 docker run -t -i --privileged -v /dev/bus/usb:/dev/bus/usb -v $HOME/Desktop:/mnt/desktop image bash
 
 
-# Run the Python Developer Setup <img height=20 src="documentation/media/python.png"/>
-1. Run docker Imge with this command
-2.
-3.
+
 
